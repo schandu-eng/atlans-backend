@@ -1,0 +1,10 @@
+spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0,org.mongodb.spark:mongo-spark-connector_2.12:3.0.1 --conf spark.yarn.appMasterEnv.JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64 new_spark_file.py;
+
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic '.*'
+
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic InboundExternal
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic InboundInternal
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic OutboundInternal
+bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic OutboundExternal
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic topicName --from-beginning 
